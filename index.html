@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Selectius example</title>
+    <link rel="stylesheet" href="css/lib/selectius.css">
+</head>
+<body>
+
+    <label>
+        <select data-placeholder="Select di item">
+            <option value="1">Foo</option>
+            <option value="2">Bar</option>
+            <option value="3">Baz</option>
+            <option value="4">Qux</option>
+        </select>
+    </label>
+
+    <script src="js/vendor/requirejs/require.js"></script>
+    <script src="js/main.js"></script>
+
+<script>
+    require(
+           ['backbone', 'Selectius', 'SelectiusModel'],
+    function(Backbone,   Selectius,   Model) {
+        var select, selectius, selectData;
+
+        select = document.querySelector('select');
+
+        selectData = new Backbone.Collection([
+            {
+                label: 'Foo',
+                value: 1,
+                selected: true
+            },
+            {
+                label: 'Bar',
+                value: 2
+            },
+            {
+                label: 'Baz',
+                value: 3
+            },
+            {
+                label: 'Qux',
+                value: 4
+            }
+        ], {
+            model: Model
+        });
+
+        selectius = new Selectius({
+            collection: selectData,
+            reference : select
+        });
+
+        document.body.appendChild(selectius.render().el);
+    });
+</script>
+
+</body>
+</html>

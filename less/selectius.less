@@ -1,0 +1,51 @@
+.hidden {
+  display: none;
+}
+
+.selectius {
+  cursor: pointer;
+  display: inline-block;
+  background: #fff;
+  border: solid 1px;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.selectius-selected {
+  font-weight: bold;
+  padding: .5em 1.5em .5em .5em;
+
+  &:after {
+    content: '';
+    position: absolute;
+    margin-top: -.5em;
+    top: 1.25em;
+    right: .5em;
+    border: solid .25em #008000;
+    border-bottom-style: none;
+    border-top-width: .5em;
+    border-right-color: transparent;
+    border-left-color: transparent;
+  }
+}
+
+.selectius-list {
+  border: solid 1px rosybrown;
+  box-sizing: border-box;
+  margin: 0;
+  padding: .5em;
+  max-height: 300px;
+  position: absolute;
+  width: 100%;
+}
+
+.selectius-item {
+  list-style: none;
+
+  &.selected, &:hover, &:focus {
+    background: #00f;
+    color: #fff;
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "Selectius",
+  "version": "0.1.0",
+  "description": "Simple html select replacement",
+  "main": "js/main.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "keywords": [
+    "select"
+  ],
+  "author": "Alexey",
+  "license": "GPLv3",
+  "devDependencies": {
+    "bower": "~1.3.5",
+    "grunt": "~0.4.5",
+    "grunt-bowercopy": "~1.0.1",
+    "grunt-contrib-less": "~0.11.2",
+    "grunt-jsdoc": "^0.5.6"
+  }
+}
