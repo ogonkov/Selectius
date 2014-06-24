@@ -94,7 +94,7 @@ function (_, Backbone, List, Model) {
                 this.list = new List({
                     collection: options.collection,
                     isOpen    : options.isOpen || false,
-                    selectId  : this.getId()
+                    select    : this
                 });
 
                 /** @type {HTMLSelectElement} */
@@ -130,21 +130,32 @@ function (_, Backbone, List, Model) {
              * @param {Event|jQuery.Event} event
              */
             handleKeydown: function(event) {
-                var key, KEY_ENTER, KEY_ESC, KEY_SPACE;
+                var key, isThatElement,
+                    KEY_ENTER, KEY_ESC, KEY_SPACE, KEY_UP, KEY_DOWN;
 
                 KEY_ENTER = 13;
                 KEY_ESC = 27;
                 KEY_SPACE = 32;
+                KEY_UP    = 38;
+                KEY_DOWN  = 40;
                 key = event.keyCode;
+                isThatElement = event.target === this.el;
 
                 switch (key) {
                     case KEY_ESC  : this.close(); break;
                     case KEY_ENTER:
                     case KEY_SPACE:
-                        if (event.target === this.el && key !== KEY_ENTER) {
+                        if (isThatElement && key !== KEY_ENTER) {
                             this.open();
                         } else {
                             this.close();
+                        }
+                        break;
+
+                    case KEY_UP:
+                    case KEY_DOWN:
+                        if (isThatElement) {
+                            this.toggleList();
                         }
                         break;
                 }

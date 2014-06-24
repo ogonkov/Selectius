@@ -5,6 +5,7 @@ define(['backbone', 'Item'], function (Backbone, Item) {
     var List;
 
     /**
+     * @alias module:List
      * @extends Backbone.View
      */
     List = Backbone.View.extend(
@@ -12,15 +13,17 @@ define(['backbone', 'Item'], function (Backbone, Item) {
         {
             /**
              * @constructs
-             * @param {Object}  options
-             * @param {String}  options.selectId
-             * @param {String}  options.label
-             * @param {String}  options.value
-             * @param {Boolean} options.isOpen
+             * @param {Object}            options
+             * @param {HTMLSelectElement} options.select
+             * @param {String}            options.label
+             * @param {String}            options.value
+             * @param {Boolean}           options.isOpen
              */
             constructor: function (options) {
+                /** @type {HTMLSelectElement} */
+                this.select = options.select;
                 /** @type {String} */
-                this.selectId = options.selectId;
+                this.selectId = this.select.getId();
 
                 Backbone.View.apply(this, arguments);
             },
@@ -76,8 +79,8 @@ define(['backbone', 'Item'], function (Backbone, Item) {
 
             /**
              * DOM events
-             * @see {@link module:List#close}
-             * @see {@link module:List#handleKeydown}
+             * @see {@link List#close}
+             * @see {@link List#handleKeydown}
              */
             events: {
                 click: 'close',
@@ -168,12 +171,41 @@ define(['backbone', 'Item'], function (Backbone, Item) {
             },
 
             /**
+             * Make sure that select options are fully visible
+             *
+             * @returns {boolean}
+             */
+            isEnoughSpace: function() {
+                return this.el.getBoundingClientRect().bottom
+                    < window.innerHeight;
+            },
+
+            setFlippedCoordinates: function() {
+                var element;
+
+                element = this.el;
+
+                element.style.top = '-' + (element.offsetHeight) + 'px';
+            },
+
+            clearFlippedCoordinates: function() {
+                this.el.style.top = '';
+            },
+
+            /**
              * Perform list opening
              */
             open: function() {
                 this.isOpen = true;
                 this.el.classList.remove('hidden');
                 this.el.setAttribute('aria-hidden', 'false');
+
+                this.clearFlippedCoordinates();
+
+                if (!this.isEnoughSpace()) {
+                    this.setFlippedCoordinates();
+                }
+
                 this.focus();
             },
 
